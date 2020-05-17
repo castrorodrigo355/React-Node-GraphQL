@@ -1,0 +1,26 @@
+type Query {
+  welcome: String!
+  getName(name: String!): String!
+  messages: [Message!]
+  message(id: String!): Message!
+}
+
+type Mutation {
+  createMessage(input: MessageInput): [Message!]!
+  deleteMessage(id: String!): [Message!]!
+  updateMessage(id: String!, input: MessageInput): [Message!]!
+  deleteAllMessages(id: String!): String!
+}
+
+type Message {
+  _id: ID!
+  title: String!
+  content: String!
+  author: String!
+}
+
+input MessageInput {
+  title: String!
+  content: String!
+  author: String!
+}
