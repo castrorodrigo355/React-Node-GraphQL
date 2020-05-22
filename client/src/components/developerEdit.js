@@ -3,42 +3,42 @@ import { Query } from "react-apollo";
 import { useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
-const GET_MESSAGE = gql`
-  query message($id: String!) {
-    message(id: $id) {
+const GET_DEVELOPER = gql`
+  query developer($id: String!) {
+    developer(id: $id) {
       _id
-      title
-      content
-      author
+      name
+      language
+      tech
     }
   }
 `;
 
-const UPDATE_MESSAGE = gql`
-  mutation updateMessage($id: String!, $input: MessageInput!) {
-    updateMessage(id: $id, input: $input) {
-      title
-      content
-      author
+const UPDATE_DEVELOPER = gql`
+  mutation updateDeveloper($id: String!, $input: InputDeveloper!) {
+    updateDeveloper(id: $id, input: $input) {
+      _id
+      name
+      language
+      tech
     }
   }
 `;
 
-export default function MessageEdit({ match }) {
+export default function DeveloperEdit({ match }) {
   const id = match.params._id;
 
-  const [message, setMessage] = useState({
-    title: "",
-    content: "",
-    author: ""
+  const [dev, setDev] = useState({
+    name: "",
+    language: "",
+    tech: ""
   });
-  const onChange = e =>
-    setMessage({ ...message, [e.target.name]: e.target.value });
+  const onChange = e => setDev({ ...dev, [e.target.name]: e.target.value });
 
-  const [updateMessage] = useMutation(UPDATE_MESSAGE);
+  const [updateDeveloper] = useMutation(UPDATE_DEVELOPER);
 
   return (
-    <Query query={GET_MESSAGE} variables={{ id }}>
+    <Query query={GET_DEVELOPER} variables={{ id }}>
       {({ loading, error, data }) => {
         if (loading) return <p>Loading…</p>;
         if (error) return <p>Error !</p>;
@@ -47,13 +47,13 @@ export default function MessageEdit({ match }) {
             <div className="card-body">
               <div className="row">
                 <span className="badge badge-pill badge-info">
-                  {data.message.title}
+                  {data.developer.name}
                 </span>
                 <span className="badge badge-pill badge-info">
-                  {data.message.content}
+                  {data.developer.language}
                 </span>
                 <span className="badge badge-pill badge-info">
-                  {data.message.author}
+                  {data.developer.tech}
                 </span>
               </div>
               <hr />
@@ -61,40 +61,40 @@ export default function MessageEdit({ match }) {
                 onSubmit={async e => {
                   e.preventDefault();
                   const id = match.params._id;
-                  await updateMessage({ variables: { id, input: message } });
-                  window.location.href = "/messageList";
+                  await updateDeveloper({ variables: { id, input: dev } });
+                  window.location.href = "/developerList";
                 }}
               >
                 <div className="form-group">
-                  <label htmlFor="title">Title</label>
+                  <label htmlFor="name">Name</label>
                   <input
                     type="text"
                     placeholder="Insert new values please..."
-                    name="title"
+                    name="name"
                     className="form-control"
-                    value={message.title}
+                    value={dev.name}
                     onChange={onChange}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="content">Content</label>
+                  <label htmlFor="langauge">Language</label>
                   <input
                     type="text"
-                    name="content"
+                    name="language"
                     placeholder="Insert new values please..."
                     className="form-control"
-                    value={message.content}
+                    value={dev.language}
                     onChange={onChange}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="author">Author</label>
+                  <label htmlFor="tech">Tech</label>
                   <input
                     type="text"
-                    name="author"
+                    name="tech"
                     placeholder="Insert new values please..."
                     className="form-control"
-                    value={message.author}
+                    value={dev.tech}
                     onChange={onChange}
                   />
                 </div>

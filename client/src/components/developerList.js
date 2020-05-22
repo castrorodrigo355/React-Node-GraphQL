@@ -4,71 +4,73 @@ import { useMutation } from "@apollo/react-hooks";
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 
-const GET_MESSAGES = gql`
-  query messages {
-    messages {
+const GET_DEVELOPERS = gql`
+  query developers {
+    developers {
       _id
-      title
-      content
-      author
+      name
+      language
+      tech
     }
   }
 `;
 
-const DELETE_MESSAGE = gql`
-  mutation deleteMessage($id: String!) {
-    deleteMessage(id: $id) {
+const DELETE_DEVELOPER = gql`
+  mutation deleteDeveloper($id: String!) {
+    deleteDeveloper(id: $id) {
       _id
-      title
-      content
-      author
+      name
+      language
+      tech
     }
   }
 `;
 
-const MessageList = () => {
-  const [deleteMessage] = useMutation(DELETE_MESSAGE);
+const DeveloperList = () => {
+  const [deleteDeveloper] = useMutation(DELETE_DEVELOPER);
 
   return (
-    <Query query={GET_MESSAGES}>
+    <Query query={GET_DEVELOPERS}>
       {({ loading, error, data }) => {
         if (loading) return <p>Loading…</p>;
         if (error) return <p>Error !</p>;
-        return data.messages.map(({ _id, title, content, author }) => (
+        return data.developers.map(({ _id, name, language, tech }) => (
           <div key={_id} className="card-body border m-2">
             <div className="row">
               <div className="col-8">
-                <h4>{title}</h4>
+                <h4>{name}</h4>
               </div>
-              <div className="col-4">
+              <div disabled className="col-4">
                 <div>
-                  <Link to={`/messageList/${_id}`}>
+                  <Link to={`/developerList/${_id}`}>
                     <span className="badge badge-pill badge-primary">
-                      Content
+                      Details
                     </span>
                   </Link>
                 </div>
+
                 <div>
                   <span
                     style={{ cursor: "pointer" }}
                     className="badge badge-pill badge-danger "
                     onClick={async () => {
-                      await deleteMessage({ variables: { id: _id } });
-                      window.location.href = "/messageList";
+                      await deleteDeveloper({ variables: { id: _id } });
+                      window.location.href = "/developerList";
                     }}
                   >
                     Delete
                   </span>
                 </div>
+
                 <div>
-                  <Link to={`/messageList/edit/${_id}`}>
+                  <Link to={`/developerList/edit/${_id}`}>
                     <span className="badge badge-pill badge-info">Edit</span>
                   </Link>
                 </div>
               </div>
             </div>
-            <h5>{content}</h5>
-            <p>{author}</p>
+            <h5>{language}</h5>
+            <p>{tech}</p>
           </div>
         ));
       }}
@@ -76,4 +78,4 @@ const MessageList = () => {
   );
 };
 
-export default MessageList;
+export default DeveloperList;

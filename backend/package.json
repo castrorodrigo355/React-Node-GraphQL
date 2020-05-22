@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server": "^2.13.1",
     "bootswatch": "^4.4.1",
     "graphql-yoga": "^1.18.3",
     "mongoose": "^5.9.5"

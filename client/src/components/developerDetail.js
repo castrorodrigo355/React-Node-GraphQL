@@ -2,21 +2,22 @@ import React from "react";
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 
-const GET_MESSAGE = gql`
-  query message($id: String!) {
-    message(id: $id) {
+const GET_DEVELOPER = gql`
+  query developer($id: String!) {
+    developer(id: $id) {
       _id
-      title
-      content
-      author
+      name
+      language
+      tech
     }
   }
 `;
 
-const MessageDetail = ({ match }) => {
+const DeveloperDetail = ({ match }) => {
   const id = match.params._id;
+  console.log(id);
   return (
-    <Query query={GET_MESSAGE} variables={{ id }}>
+    <Query query={GET_DEVELOPER} variables={{ id }}>
       {({ loading, error, data }) => {
         if (loading) return <p>Loading…</p>;
         if (error) return <p>Error !</p>;
@@ -25,11 +26,11 @@ const MessageDetail = ({ match }) => {
             <div className="card-body">
               <div className="row">
                 <div className="col-8">
-                  <h4>{data.message.title}</h4>
+                  <h4>Name: {data.developer.name}</h4>
                 </div>
               </div>
-              <p>{data.message.content}</p>
-              <p>{data.message.author}</p>
+              <p>Langauge: {data.developer.language}</p>
+              <p>Tech: {data.developer.tech}</p>
             </div>
           </div>
         );
@@ -37,4 +38,4 @@ const MessageDetail = ({ match }) => {
     </Query>
   );
 };
-export default MessageDetail;
+export default DeveloperDetail;

@@ -2,43 +2,44 @@ import React, { useState } from "react";
 import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
 
-const CREATE_MESSAGE = gql`
-  mutation createMessage($input: MessageInput!) {
-    createMessage(input: $input) {
-      title
-      content
+const CREATE_DEVELOPER = gql`
+  mutation createDeveloper($input: InputDeveloper!) {
+    createDeveloper(input: $input) {
+      _id
+      name
+      language
+      tech
     }
   }
 `;
 
 const MessageForm = () => {
-  const [message, setMessage] = useState({
-    title: "",
-    content: "",
-    author: ""
+  const [dev, setDev] = useState({
+    name: "",
+    language: "",
+    tech: ""
   });
-  const onChange = e =>
-    setMessage({ ...message, [e.target.name]: e.target.value });
+  const onChange = e => setDev({ ...dev, [e.target.name]: e.target.value });
 
   return (
-    <Mutation mutation={CREATE_MESSAGE}>
-      {createMessage => (
+    <Mutation mutation={CREATE_DEVELOPER}>
+      {createDeveloper => (
         <div className="col-md-6 offset-md-3">
           <div className="card">
             <div className="card-body">
               <form
                 onSubmit={e => {
                   e.preventDefault();
-                  createMessage({ variables: { input: message } });
-                  window.location.href = "/messageList";
+                  createDeveloper({ variables: { input: dev } });
+                  window.location.href = "/developerList";
                 }}
               >
                 <div className="form-group">
                   <input
                     type="text"
-                    placeholder="Write a Title..."
-                    value={message.title}
-                    name="title"
+                    placeholder="Enter name..."
+                    value={dev.title}
+                    name="name"
                     onChange={onChange}
                     className="form-control"
                   />
@@ -46,19 +47,19 @@ const MessageForm = () => {
                 <div className="form-group">
                   <textarea
                     rows="5"
-                    placeholder="Content..."
+                    placeholder="Language..."
                     onChange={onChange}
-                    value={message.content}
-                    name="content"
+                    value={dev.language}
+                    name="language"
                     className="form-control"
                   ></textarea>
                 </div>
                 <div className="form-group">
                   <input
                     type="text"
-                    placeholder="Author"
-                    value={message.author}
-                    name="author"
+                    placeholder="Tech"
+                    value={dev.tech}
+                    name="tech"
                     onChange={onChange}
                     className="form-control"
                   />

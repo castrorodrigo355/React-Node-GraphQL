@@ -30,26 +30,27 @@ export const Navigation = () => {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <Link className="nav-link" to="/messageList">
-              Messages
+            <Link className="nav-link" to="/developerList">
+              Developers
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/create-message">
-              Create Message
+            <Link className="nav-link" to="/developerForm">
+              Create
             </Link>
           </li>
+          {/*
           <li className="nav-item" style={{ cursor: "pointer" }}>
             <span
               className="nav-link"
               onClick={async () => {
                 await deleteAllMessages({ variables: { id: "1" } });
-                window.location.href = "/messageList";
+                window.location.href = "/developerList";
               }}
             >
               Delete All
             </span>
-          </li>
+          </li> */}
         </ul>
       </div>
     </nav>

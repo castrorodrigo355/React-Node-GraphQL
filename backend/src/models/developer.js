@@ -1,18 +1,18 @@
 import { Schema, model } from "mongoose";
 
-const messageSchema = new Schema({
-  title: {
+const developerSchema = new Schema({
+  name: {
     type: String,
     required: true
   },
-  content: {
+  language: {
     type: String,
     required: true
   },
-  author: {
+  tech: {
     type: String,
     required: true
   }
 });
 
-export default model("Message", messageSchema);
+export default model("Developer", developerSchema);
